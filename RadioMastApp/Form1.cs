@@ -16,5 +16,17 @@ namespace RadioMastApp
         {
             InitializeComponent();
         }
+
+        private void mastBar1_Scroll(object sender, EventArgs e)
+        {
+            TrackBar bar = sender as TrackBar;
+            heightLabel1.Text = $"{bar.Value} m";
+        }
+
+        private void mastBar2_Scroll(object sender, EventArgs e)
+        {
+            TrackBar bar = sender as TrackBar;
+            heightLabel2.Text = $"{bar.Value} m";
+        }
     }
 }

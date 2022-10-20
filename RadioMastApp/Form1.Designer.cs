@@ -92,10 +92,12 @@
             // mastBar1
             // 
             this.mastBar1.Location = new System.Drawing.Point(10, 34);
+            this.mastBar1.Maximum = 100;
             this.mastBar1.Name = "mastBar1";
             this.mastBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.mastBar1.Size = new System.Drawing.Size(45, 104);
             this.mastBar1.TabIndex = 0;
+            this.mastBar1.Scroll += new System.EventHandler(this.mastBar1_Scroll);
             // 
             // label1
             // 
@@ -118,10 +120,12 @@
             // mastBar2
             // 
             this.mastBar2.Location = new System.Drawing.Point(78, 34);
+            this.mastBar2.Maximum = 100;
             this.mastBar2.Name = "mastBar2";
             this.mastBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.mastBar2.Size = new System.Drawing.Size(45, 104);
             this.mastBar2.TabIndex = 3;
+            this.mastBar2.Scroll += new System.EventHandler(this.mastBar2_Scroll);
             // 
             // heightLabel1
             // 
