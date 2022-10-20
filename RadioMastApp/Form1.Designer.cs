@@ -41,7 +41,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.calcButton = new System.Windows.Forms.Button();
             this.saveButton1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
+            this.outcomeLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mastBar1)).BeginInit();
@@ -61,7 +61,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.outcomeLabel);
             this.tabPage1.Controls.Add(this.saveButton1);
             this.tabPage1.Controls.Add(this.calcButton);
             this.tabPage1.Controls.Add(this.label5);
@@ -169,6 +169,7 @@
             this.calcButton.TabIndex = 8;
             this.calcButton.Text = "Oblicz";
             this.calcButton.UseVisualStyleBackColor = true;
+            this.calcButton.Click += new System.EventHandler(this.calcButton_Click);
             // 
             // saveButton1
             // 
@@ -178,15 +179,15 @@
             this.saveButton1.TabIndex = 9;
             this.saveButton1.Text = "Zapisz do JSON";
             this.saveButton1.UseVisualStyleBackColor = true;
+            this.saveButton1.Click += new System.EventHandler(this.saveButton1_Click);
             // 
-            // label6
+            // outcomeLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(209, 18);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(40, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Wynik:";
+            this.outcomeLabel.Location = new System.Drawing.Point(209, 18);
+            this.outcomeLabel.Name = "outcomeLabel";
+            this.outcomeLabel.Size = new System.Drawing.Size(195, 68);
+            this.outcomeLabel.TabIndex = 10;
+            this.outcomeLabel.Text = "Wynik:";
             // 
             // Form1
             // 
@@ -220,7 +221,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar mastBar1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label outcomeLabel;
     }
 }
 
