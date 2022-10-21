@@ -9,17 +9,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RadioMastApp.Models;
+using AxMapWinGIS;
+using MapWinGIS;
+using Point = MapWinGIS.Point;
+using System.Xml.XPath;
 
 namespace RadioMastApp
 {
     public partial class Form1 : Form
     {
-        private Outcome Outcome;
+        private Outcome _outcome;
 
         public Form1()
         {
             InitializeComponent();
-            Outcome = new Outcome();
+            _outcome = new Outcome();
+            axMap.Projection = tkMapProjection.PROJECTION_GOOGLE_MERCATOR;
+            axMap.TileProvider = tkTileProvider.OpenStreetMap;
+            axMap.KnownExtents = tkKnownExtents.keUSA;
         }
 
         private void mastBar1_Scroll(object sender, EventArgs e)
@@ -36,13 +44,13 @@ namespace RadioMastApp
 
         private void calcButton_Click(object sender, EventArgs e)
         {
-            Outcome.Freq = int.Parse(freqBox.Text);
-            Outcome.MastHeight1 = mastBar1.Value;
-            Outcome.MastHeight2 = mastBar2.Value;
+            _outcome.Freq = int.Parse(freqBox.Text);
+            _outcome.MastHeight1 = mastBar1.Value;
+            _outcome.MastHeight2 = mastBar2.Value;
 
-            Outcome.Calculate();
+            _outcome.Calculate();
 
-            outcomeLabel.Text = $"Line of sight: {Math.Round(Outcome.LineOfSight, 4)} m\nFresnel radius: {Math.Round(Outcome.FresnelRadius, 4)} m";
+            outcomeLabel.Text = $"Line of sight: {Math.Round(_outcome.LineOfSight, 4)} m\nFresnel radius: {Math.Round(_outcome.FresnelRadius, 4)} m";
         }
 
         private void saveButton1_Click(object sender, EventArgs e)
@@ -57,8 +65,48 @@ namespace RadioMastApp
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (saveFileDialog.FileName.Length > 0)
-                    Outcome.SaveToFile(saveFileDialog.FileName);
+                    _outcome.SaveToFile(saveFileDialog.FileName);
             }
+        }
+
+        
+        private void CreatePointShapefile(double x, double y)
+        {
+            Shapefile sf = new Shapefile();
+            int shapeCount = 0;
+
+            bool result = sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT);
+
+            double projX = 0, projY = 0;
+
+            axMap.DegreesToProj(y, x, ref projX, ref projY);
+
+            Point point = new Point
+            {
+                x = projX,
+                y = projY
+            };
+
+            Shape shape = new Shape();
+            shape.Create(ShpfileType.SHP_POINT);
+
+            int index = 0;
+
+            shape.InsertPoint(point, ref index);
+            sf.EditInsertShape(shape, ref shapeCount);
+            shapeCount++;
+
+            sf.DefaultDrawingOptions.SetDefaultPointSymbol(tkDefaultPointSymbol.dpsCircle);
+            sf.DefaultDrawingOptions.SetGradientFill(0xff0000ff, (short)0 );
+            axMap.AddLayer(sf, true);
+        }
+
+        private void pointButton_Click(object sender, EventArgs e)
+        {
+            double x = double.Parse(latBox.Text);
+            double y = double.Parse(lonBox.Text);
+
+            CreatePointShapefile(x, y);
         }
     }
 }

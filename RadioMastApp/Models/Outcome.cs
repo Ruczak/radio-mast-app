@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace RadioMastApp.Models
 {
-    internal class Outcome
+    public class Outcome
     {
         public int MastHeight1 { get; set; }
         public int MastHeight2 { get; set; }
