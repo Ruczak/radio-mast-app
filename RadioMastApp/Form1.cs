@@ -18,43 +18,20 @@ namespace RadioMastApp
 {
     public partial class Form1 : Form
     {
-        private OutcomeTwoMast _outcome;
+        private OutcomeTwoMast _twoMastOutcome;
+        private OutcomeOneMast _oneMastOutcome;
 
         public Form1()
         {
             InitializeComponent();
-            _outcome = new OutcomeTwoMast();
+            _twoMastOutcome = new OutcomeTwoMast();
+            _oneMastOutcome = new OutcomeOneMast();
             axMap.Projection = tkMapProjection.PROJECTION_GOOGLE_MERCATOR;
             axMap.TileProvider = tkTileProvider.OpenStreetMap;
             axMap.KnownExtents = tkKnownExtents.keUSA;
         }
 
-        private List<Point> GetCirclePoints(double lat, double lon, double radius, int res)
-        {
-            double radiusLon = radius / (111.319 * Math.Cos(lat * Math.PI / 180));
-            double radiusLat = radius / 110.574;
-
-            int pointCount = 4;
-            for (int i = 0; i < res; i++)
-                pointCount *= 2;
-
-            List <Point> points = new List<Point>(pointCount);
-
-            double angle = 2 * Math.PI / pointCount;
-
-            for (int i = 0; i < pointCount; i++)
-            {
-                points.Add(new Point
-                {
-                    x = lon + radiusLon * Math.Cos(angle * i),
-                    y = lat + radiusLat * Math.Sin(angle * i)
-                });
-            }
-
-            return points;
-        }
-
-        private void CreateCircleShapefile(double lat, double lon, double radius, int res)
+        private void CreatePolygon(List<Point> points)
         {
             Shapefile sf = new Shapefile();
             int shapeCount = 0;
@@ -63,8 +40,6 @@ namespace RadioMastApp
 
             Shape shape = new Shape();
             shape.Create(ShpfileType.SHP_POLYGON);
-
-            List<Point> points = GetCirclePoints(lat, lon, radius, res);
 
             for (int i = 0; i < points.Count; i++)
             {
@@ -89,7 +64,7 @@ namespace RadioMastApp
             axMap.AddLayer(sf, true);
         }
 
-        private void CreatePointShapefile(double x, double y)
+        private void CreatePoint(double x, double y)
         {
             Shapefile sf = new Shapefile();
             int shapeCount = 0;
@@ -134,13 +109,13 @@ namespace RadioMastApp
 
         private void calcButton_Click(object sender, EventArgs e)
         {
-            _outcome.Freq = int.Parse(freqBox.Text);
-            _outcome.MastHeight1 = mastBar1.Value;
-            _outcome.MastHeight2 = mastBar2.Value;
+            _twoMastOutcome.Freq = int.Parse(freqBox.Text);
+            _twoMastOutcome.MastHeight1 = mastBar1.Value;
+            _twoMastOutcome.MastHeight2 = mastBar2.Value;
 
-            _outcome.Calculate();
+            _twoMastOutcome.Calculate();
 
-            outcomeLabel.Text = $"Line of sight: {Math.Round(_outcome.LineOfSight, 4)} m\nFresnel radius: {Math.Round(_outcome.FresnelRadius, 4)} m";
+            outcomeLabel.Text = $"Line of sight: {Math.Round(_twoMastOutcome.LineOfSight, 4)} m\nFresnel radius: {Math.Round(_twoMastOutcome.FresnelRadius, 4)} m";
         }
 
         private void saveButton1_Click(object sender, EventArgs e)
@@ -155,7 +130,7 @@ namespace RadioMastApp
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (saveFileDialog.FileName.Length > 0)
-                    _outcome.SaveToFile(saveFileDialog.FileName);
+                    _twoMastOutcome.SaveToFile(saveFileDialog.FileName);
             }
         }
 
@@ -163,9 +138,15 @@ namespace RadioMastApp
         {
             double lat = double.Parse(latBox.Text);
             double lon = double.Parse(lonBox.Text);
+            double height = double.Parse(heightBox.Text);
 
-            CreatePointShapefile(lat, lon);
-            CreateCircleShapefile(lat, lon, 1, 5);
+            _oneMastOutcome.Lat = lat;
+            _oneMastOutcome.Lon = lon;
+            _oneMastOutcome.MastHeight = height;
+            _oneMastOutcome.Calculate();
+
+            CreatePoint(lat, lon);
+            CreatePolygon(_oneMastOutcome.CirclePoints);
         }
     }
 }

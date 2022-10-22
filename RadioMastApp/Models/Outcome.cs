@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace RadioMastApp.Models
 {
-    public class GeoJSON
+    public abstract class Outcome
     {
+        public abstract void Calculate();
 
+        public abstract void SaveToFile(string path);
     }
 }

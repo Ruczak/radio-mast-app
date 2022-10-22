@@ -50,7 +50,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lonBox = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.heightBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mastBar2)).BeginInit();
@@ -88,7 +91,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(767, 399);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Obliczenia";
+            this.tabPage1.Text = "Dwa maszty";
             // 
             // outcomeLabel
             // 
@@ -192,6 +195,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.axMap);
             this.tabPage2.Controls.Add(this.latBox);
             this.tabPage2.Controls.Add(this.pointButton);
@@ -199,22 +205,22 @@
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.lonBox);
-            this.tabPage2.Controls.Add(this.textBox1);
+            this.tabPage2.Controls.Add(this.heightBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(767, 399);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Mapa";
+            this.tabPage2.Text = "Jeden Maszt";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // axMap
             // 
             this.axMap.Enabled = true;
-            this.axMap.Location = new System.Drawing.Point(180, 9);
+            this.axMap.Location = new System.Drawing.Point(210, 9);
             this.axMap.Name = "axMap";
             this.axMap.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap.OcxState")));
-            this.axMap.Size = new System.Drawing.Size(581, 384);
+            this.axMap.Size = new System.Drawing.Size(551, 384);
             this.axMap.TabIndex = 9;
             // 
             // latBox
@@ -226,7 +232,7 @@
             // 
             // pointButton
             // 
-            this.pointButton.Location = new System.Drawing.Point(10, 113);
+            this.pointButton.Location = new System.Drawing.Point(10, 84);
             this.pointButton.Name = "pointButton";
             this.pointButton.Size = new System.Drawing.Size(103, 23);
             this.pointButton.TabIndex = 7;
@@ -236,7 +242,7 @@
             // 
             // saveButton2
             // 
-            this.saveButton2.Location = new System.Drawing.Point(10, 84);
+            this.saveButton2.Location = new System.Drawing.Point(10, 113);
             this.saveButton2.Name = "saveButton2";
             this.saveButton2.Size = new System.Drawing.Size(103, 23);
             this.saveButton2.TabIndex = 6;
@@ -268,12 +274,41 @@
             this.lonBox.Size = new System.Drawing.Size(86, 20);
             this.lonBox.TabIndex = 1;
             // 
-            // textBox1
+            // heightBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(76, 9);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(97, 20);
-            this.textBox1.TabIndex = 0;
+            this.heightBox.Location = new System.Drawing.Point(76, 9);
+            this.heightBox.Name = "heightBox";
+            this.heightBox.Size = new System.Drawing.Size(97, 20);
+            this.heightBox.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(179, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(15, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "m";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(179, 35);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(14, 20);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "°";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label8.Location = new System.Drawing.Point(179, 61);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(14, 20);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "°";
             // 
             // Form1
             // 
@@ -314,11 +349,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox lonBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox heightBox;
         private System.Windows.Forms.Button saveButton2;
         private System.Windows.Forms.TextBox latBox;
         private System.Windows.Forms.Button pointButton;
         private AxMapWinGIS.AxMap axMap;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
     }
 }
 
