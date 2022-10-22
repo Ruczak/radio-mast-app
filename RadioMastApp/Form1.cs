@@ -18,15 +18,106 @@ namespace RadioMastApp
 {
     public partial class Form1 : Form
     {
-        private Outcome _outcome;
+        private OutcomeTwoMast _outcome;
 
         public Form1()
         {
             InitializeComponent();
-            _outcome = new Outcome();
+            _outcome = new OutcomeTwoMast();
             axMap.Projection = tkMapProjection.PROJECTION_GOOGLE_MERCATOR;
             axMap.TileProvider = tkTileProvider.OpenStreetMap;
             axMap.KnownExtents = tkKnownExtents.keUSA;
+        }
+
+        private List<Point> GetCirclePoints(double lat, double lon, double radius, int res)
+        {
+            double radiusLon = radius / (111.319 * Math.Cos(lat * Math.PI / 180));
+            double radiusLat = radius / 110.574;
+
+            int pointCount = 4;
+            for (int i = 0; i < res; i++)
+                pointCount *= 2;
+
+            List <Point> points = new List<Point>(pointCount);
+
+            double angle = 2 * Math.PI / pointCount;
+
+            for (int i = 0; i < pointCount; i++)
+            {
+                points.Add(new Point
+                {
+                    x = lon + radiusLon * Math.Cos(angle * i),
+                    y = lat + radiusLat * Math.Sin(angle * i)
+                });
+            }
+
+            return points;
+        }
+
+        private void CreateCircleShapefile(double lat, double lon, double radius, int res)
+        {
+            Shapefile sf = new Shapefile();
+            int shapeCount = 0;
+
+            sf.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON);
+
+            Shape shape = new Shape();
+            shape.Create(ShpfileType.SHP_POLYGON);
+
+            List<Point> points = GetCirclePoints(lat, lon, radius, res);
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                double projLon = 0, projLat = 0;
+
+                axMap.DegreesToProj(points[i].x, points[i].y, ref projLon, ref projLat);
+
+                shape.InsertPoint(new Point { x = projLon, y = projLat } , ref i);
+            }
+
+            sf.EditInsertShape(shape, ref shapeCount);
+            shapeCount++;
+
+            sf.DefaultDrawingOptions.SetDefaultPointSymbol(tkDefaultPointSymbol.dpsCircle);
+
+            ColorScheme scheme = new ColorScheme();
+            scheme.SetColors2(tkMapColor.Wheat, tkMapColor.DarkRed);
+
+            sf.Categories.ApplyColorScheme(tkColorSchemeType.ctSchemeGraduated, scheme);
+            sf.DefaultDrawingOptions.FillTransparency = 128;
+
+            axMap.AddLayer(sf, true);
+        }
+
+        private void CreatePointShapefile(double x, double y)
+        {
+            Shapefile sf = new Shapefile();
+            int shapeCount = 0;
+
+            bool result = sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT);
+
+            double projX = 0, projY = 0;
+
+            axMap.DegreesToProj(y, x, ref projX, ref projY);
+
+            Point point = new Point
+            {
+                x = projX,
+                y = projY
+            };
+
+            Shape shape = new Shape();
+            shape.Create(ShpfileType.SHP_POINT);
+
+            int index = 0;
+
+            shape.InsertPoint(point, ref index);
+            sf.EditInsertShape(shape, ref shapeCount);
+            shapeCount++;
+
+            sf.DefaultDrawingOptions.SetDefaultPointSymbol(tkDefaultPointSymbol.dpsCircle);
+            sf.DefaultDrawingOptions.SetGradientFill(0xff00008b, 0);
+            axMap.AddLayer(sf, true);
         }
 
         private void mastBar1_Scroll(object sender, EventArgs e)
@@ -68,87 +159,13 @@ namespace RadioMastApp
             }
         }
 
-        private void CreateCircleShapefile(double x, double y, double radius, int res)
-        {
-            Shapefile sf = new Shapefile();
-            int shapeCount = 0;
-
-            bool result = sf.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON);
-
-            Shape shape = new Shape();
-            shape.Create(ShpfileType.SHP_POLYGON);
-
-            for (int i = 0; i < Math.Pow(2, 2 + res); i++)
-            {
-                double projX = 0, projY = 0;
-
-                axMap.DegreesToProj(
-                    y + radius * Math.Cos(i * 2 * Math.PI / Math.Pow(2, 2 + res)),
-                    x - radius * Math.Sin(i * 2 * Math.PI / Math.Pow(2, 2 + res)),
-                    ref projX, ref projY);
-                
-
-                Point point = new Point
-                { 
-                    x = projX,
-                    y = projY
-                };
-
-                shape.InsertPoint(point, ref i);
-            }
-
-            sf.EditInsertShape(shape, ref shapeCount);
-            shapeCount++;
-
-            sf.DefaultDrawingOptions.SetDefaultPointSymbol(tkDefaultPointSymbol.dpsCircle);
-
-            ColorScheme scheme = new ColorScheme();
-            scheme.SetColors2(tkMapColor.Wheat, tkMapColor.DarkRed);
-
-            sf.Categories.ApplyColorScheme(tkColorSchemeType.ctSchemeGraduated, scheme);
-            sf.DefaultDrawingOptions.FillTransparency = 50;
-            
-            axMap.AddLayer(sf, true);
-        }
-
-        private void CreatePointShapefile(double x, double y)
-        {
-            Shapefile sf = new Shapefile();
-            int shapeCount = 0;
-
-            bool result = sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT);
-
-            double projX = 0, projY = 0;
-
-            axMap.DegreesToProj(y, x, ref projX, ref projY);
-
-            Point point = new Point
-            {
-                x = projX,
-                y = projY
-            };
-
-            Shape shape = new Shape();
-            shape.Create(ShpfileType.SHP_POINT);
-
-            int index = 0;
-
-            shape.InsertPoint(point, ref index);
-            sf.EditInsertShape(shape, ref shapeCount);
-            shapeCount++;
-
-            sf.DefaultDrawingOptions.SetDefaultPointSymbol(tkDefaultPointSymbol.dpsCircle);
-            sf.DefaultDrawingOptions.SetGradientFill(0xff0000ff, 0);
-            axMap.AddLayer(sf, true);
-        }
-
         private void pointButton_Click(object sender, EventArgs e)
         {
-            double x = double.Parse(latBox.Text);
-            double y = double.Parse(lonBox.Text);
+            double lat = double.Parse(latBox.Text);
+            double lon = double.Parse(lonBox.Text);
 
-            CreatePointShapefile(x, y);
-            CreateCircleShapefile(x, y, 2, 5);
+            CreatePointShapefile(lat, lon);
+            CreateCircleShapefile(lat, lon, 1, 5);
         }
     }
 }
