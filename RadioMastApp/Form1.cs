@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -69,7 +68,49 @@ namespace RadioMastApp
             }
         }
 
-        
+        private void CreateCircleShapefile(double x, double y, double radius, int res)
+        {
+            Shapefile sf = new Shapefile();
+            int shapeCount = 0;
+
+            bool result = sf.CreateNewWithShapeID("", ShpfileType.SHP_POLYGON);
+
+            Shape shape = new Shape();
+            shape.Create(ShpfileType.SHP_POLYGON);
+
+            for (int i = 0; i < Math.Pow(2, 2 + res); i++)
+            {
+                double projX = 0, projY = 0;
+
+                axMap.DegreesToProj(
+                    y + radius * Math.Cos(i * 2 * Math.PI / Math.Pow(2, 2 + res)),
+                    x - radius * Math.Sin(i * 2 * Math.PI / Math.Pow(2, 2 + res)),
+                    ref projX, ref projY);
+                
+
+                Point point = new Point
+                { 
+                    x = projX,
+                    y = projY
+                };
+
+                shape.InsertPoint(point, ref i);
+            }
+
+            sf.EditInsertShape(shape, ref shapeCount);
+            shapeCount++;
+
+            sf.DefaultDrawingOptions.SetDefaultPointSymbol(tkDefaultPointSymbol.dpsCircle);
+
+            ColorScheme scheme = new ColorScheme();
+            scheme.SetColors2(tkMapColor.Wheat, tkMapColor.DarkRed);
+
+            sf.Categories.ApplyColorScheme(tkColorSchemeType.ctSchemeGraduated, scheme);
+            sf.DefaultDrawingOptions.FillTransparency = 50;
+            
+            axMap.AddLayer(sf, true);
+        }
+
         private void CreatePointShapefile(double x, double y)
         {
             Shapefile sf = new Shapefile();
@@ -97,7 +138,7 @@ namespace RadioMastApp
             shapeCount++;
 
             sf.DefaultDrawingOptions.SetDefaultPointSymbol(tkDefaultPointSymbol.dpsCircle);
-            sf.DefaultDrawingOptions.SetGradientFill(0xff0000ff, (short)0 );
+            sf.DefaultDrawingOptions.SetGradientFill(0xff0000ff, 0);
             axMap.AddLayer(sf, true);
         }
 
@@ -107,6 +148,7 @@ namespace RadioMastApp
             double y = double.Parse(lonBox.Text);
 
             CreatePointShapefile(x, y);
+            CreateCircleShapefile(x, y, 2, 5);
         }
     }
 }
