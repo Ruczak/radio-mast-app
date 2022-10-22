@@ -1,6 +1,8 @@
 ﻿using MapWinGIS;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,7 +44,44 @@ namespace RadioMastApp.Models
 
         public override void SaveToFile(string path)
         {
-            throw new NotImplementedException();
+            string coords = "";
+            for (int i = 0; i < CirclePoints.Count; i++)
+            {
+                coords += $"[{CirclePoints[i].y}, {CirclePoints[i].x}],\n";
+            }
+            coords += $"[{CirclePoints[0].y}, {CirclePoints[0].x}]\n";
+
+            string JSONString = @"{
+              ""type"": ""FeatureCollection"",
+              ""features"": [
+                {
+                  ""type"": ""Feature"",
+                  ""geometry"": {
+                    ""type"": ""Point"",
+                    ""coordinates"": [" + Lon.ToString() + "," + Lat.ToString() + @"]
+                  },
+                  ""properties"": {}
+                },
+                {
+                  ""type"": ""Feature"",
+                  ""geometry"": {
+                    ""type"": ""Polygon"",
+                    ""coordinates"": [
+                      [ 
+                        " + coords + @"]
+                    ]
+                  },
+                  ""properties"": {}
+                }
+              ]
+            }";
+
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.Write(JSONString);
+                sw.Flush();
+                sw.Close();
+            }
         }
     }
 }

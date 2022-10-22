@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.outcomeLabel = new System.Windows.Forms.Label();
+            this.outcomeLabel1 = new System.Windows.Forms.Label();
             this.saveButton1 = new System.Windows.Forms.Button();
-            this.calcButton = new System.Windows.Forms.Button();
+            this.calcButton1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.freqBox = new System.Windows.Forms.TextBox();
             this.heightLabel2 = new System.Windows.Forms.Label();
@@ -43,6 +43,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.mastBar1 = new System.Windows.Forms.TrackBar();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.calcButton2 = new System.Windows.Forms.Button();
+            this.outcomeLabel2 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.axMap = new AxMapWinGIS.AxMap();
             this.latBox = new System.Windows.Forms.TextBox();
             this.pointButton = new System.Windows.Forms.Button();
@@ -51,9 +56,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lonBox = new System.Windows.Forms.TextBox();
             this.heightBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mastBar2)).BeginInit();
@@ -75,9 +77,9 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.tabPage1.Controls.Add(this.outcomeLabel);
+            this.tabPage1.Controls.Add(this.outcomeLabel1);
             this.tabPage1.Controls.Add(this.saveButton1);
-            this.tabPage1.Controls.Add(this.calcButton);
+            this.tabPage1.Controls.Add(this.calcButton1);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.freqBox);
             this.tabPage1.Controls.Add(this.heightLabel2);
@@ -93,13 +95,13 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Dwa maszty";
             // 
-            // outcomeLabel
+            // outcomeLabel1
             // 
-            this.outcomeLabel.Location = new System.Drawing.Point(209, 18);
-            this.outcomeLabel.Name = "outcomeLabel";
-            this.outcomeLabel.Size = new System.Drawing.Size(195, 68);
-            this.outcomeLabel.TabIndex = 10;
-            this.outcomeLabel.Text = "Wynik:";
+            this.outcomeLabel1.Location = new System.Drawing.Point(209, 18);
+            this.outcomeLabel1.Name = "outcomeLabel1";
+            this.outcomeLabel1.Size = new System.Drawing.Size(195, 378);
+            this.outcomeLabel1.TabIndex = 10;
+            this.outcomeLabel1.Text = "Wynik:";
             // 
             // saveButton1
             // 
@@ -111,15 +113,15 @@
             this.saveButton1.UseVisualStyleBackColor = true;
             this.saveButton1.Click += new System.EventHandler(this.saveButton1_Click);
             // 
-            // calcButton
+            // calcButton1
             // 
-            this.calcButton.Location = new System.Drawing.Point(10, 210);
-            this.calcButton.Name = "calcButton";
-            this.calcButton.Size = new System.Drawing.Size(75, 23);
-            this.calcButton.TabIndex = 8;
-            this.calcButton.Text = "Oblicz";
-            this.calcButton.UseVisualStyleBackColor = true;
-            this.calcButton.Click += new System.EventHandler(this.calcButton_Click);
+            this.calcButton1.Location = new System.Drawing.Point(10, 210);
+            this.calcButton1.Name = "calcButton1";
+            this.calcButton1.Size = new System.Drawing.Size(75, 23);
+            this.calcButton1.TabIndex = 8;
+            this.calcButton1.Text = "Oblicz";
+            this.calcButton1.UseVisualStyleBackColor = true;
+            this.calcButton1.Click += new System.EventHandler(this.calcButton1_Click);
             // 
             // label5
             // 
@@ -195,6 +197,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.calcButton2);
+            this.tabPage2.Controls.Add(this.outcomeLabel2);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.label6);
@@ -214,6 +218,53 @@
             this.tabPage2.Text = "Jeden Maszt";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // calcButton2
+            // 
+            this.calcButton2.Location = new System.Drawing.Point(13, 84);
+            this.calcButton2.Name = "calcButton2";
+            this.calcButton2.Size = new System.Drawing.Size(103, 23);
+            this.calcButton2.TabIndex = 14;
+            this.calcButton2.Text = "Oblicz";
+            this.calcButton2.UseVisualStyleBackColor = true;
+            this.calcButton2.Click += new System.EventHandler(this.calcButton2_Click);
+            // 
+            // outcomeLabel2
+            // 
+            this.outcomeLabel2.Location = new System.Drawing.Point(10, 175);
+            this.outcomeLabel2.Name = "outcomeLabel2";
+            this.outcomeLabel2.Size = new System.Drawing.Size(163, 218);
+            this.outcomeLabel2.TabIndex = 13;
+            this.outcomeLabel2.Text = "Wynik:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label8.Location = new System.Drawing.Point(179, 61);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(14, 20);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "°";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label7.Location = new System.Drawing.Point(179, 35);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(14, 20);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "°";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(179, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(15, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "m";
+            // 
             // axMap
             // 
             this.axMap.Enabled = true;
@@ -232,7 +283,7 @@
             // 
             // pointButton
             // 
-            this.pointButton.Location = new System.Drawing.Point(10, 84);
+            this.pointButton.Location = new System.Drawing.Point(13, 113);
             this.pointButton.Name = "pointButton";
             this.pointButton.Size = new System.Drawing.Size(103, 23);
             this.pointButton.TabIndex = 7;
@@ -242,12 +293,13 @@
             // 
             // saveButton2
             // 
-            this.saveButton2.Location = new System.Drawing.Point(10, 113);
+            this.saveButton2.Location = new System.Drawing.Point(13, 142);
             this.saveButton2.Name = "saveButton2";
             this.saveButton2.Size = new System.Drawing.Size(103, 23);
             this.saveButton2.TabIndex = 6;
             this.saveButton2.Text = "Zapisz do JSON";
             this.saveButton2.UseVisualStyleBackColor = true;
+            this.saveButton2.Click += new System.EventHandler(this.saveButton2_Click);
             // 
             // label4
             // 
@@ -281,35 +333,6 @@
             this.heightBox.Size = new System.Drawing.Size(97, 20);
             this.heightBox.TabIndex = 0;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(179, 12);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(15, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "m";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label7.Location = new System.Drawing.Point(179, 35);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(14, 20);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "°";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label8.Location = new System.Drawing.Point(179, 61);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(14, 20);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "°";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -335,7 +358,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button saveButton1;
-        private System.Windows.Forms.Button calcButton;
+        private System.Windows.Forms.Button calcButton1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox freqBox;
         private System.Windows.Forms.Label heightLabel2;
@@ -345,7 +368,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar mastBar1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label outcomeLabel;
+        private System.Windows.Forms.Label outcomeLabel1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox lonBox;
@@ -357,6 +380,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label outcomeLabel2;
+        private System.Windows.Forms.Button calcButton2;
     }
 }
 

@@ -107,7 +107,7 @@ namespace RadioMastApp
             heightLabel2.Text = $"{bar.Value} m";
         }
 
-        private void calcButton_Click(object sender, EventArgs e)
+        private void calcButton1_Click(object sender, EventArgs e)
         {
             _twoMastOutcome.Freq = int.Parse(freqBox.Text);
             _twoMastOutcome.MastHeight1 = mastBar1.Value;
@@ -115,7 +115,7 @@ namespace RadioMastApp
 
             _twoMastOutcome.Calculate();
 
-            outcomeLabel.Text = $"Line of sight: {Math.Round(_twoMastOutcome.LineOfSight, 4)} m\nFresnel radius: {Math.Round(_twoMastOutcome.FresnelRadius, 4)} m";
+            outcomeLabel1.Text += $"\nLine of sight: {Math.Round(_twoMastOutcome.LineOfSight, 4)} m\nFresnel radius: {Math.Round(_twoMastOutcome.FresnelRadius, 4)} m";
         }
 
         private void saveButton1_Click(object sender, EventArgs e)
@@ -136,6 +136,15 @@ namespace RadioMastApp
 
         private void pointButton_Click(object sender, EventArgs e)
         {
+            if (_oneMastOutcome.LineOfSight != 0)
+            {
+                CreatePoint(_oneMastOutcome.Lat, _oneMastOutcome.Lon);
+                CreatePolygon(_oneMastOutcome.CirclePoints);
+            }
+        }
+
+        private void calcButton2_Click(object sender, EventArgs e)
+        {
             double lat = double.Parse(latBox.Text);
             double lon = double.Parse(lonBox.Text);
             double height = double.Parse(heightBox.Text);
@@ -145,8 +154,23 @@ namespace RadioMastApp
             _oneMastOutcome.MastHeight = height;
             _oneMastOutcome.Calculate();
 
-            CreatePoint(lat, lon);
-            CreatePolygon(_oneMastOutcome.CirclePoints);
+            outcomeLabel2.Text += $"\n Line of sight: {_oneMastOutcome.LineOfSight} m";
+        }
+
+        private void saveButton2_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "JSON files (*.json) |*.json|All files (*.*)|*.*",
+                FilterIndex = 2,
+                RestoreDirectory = true
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (saveFileDialog.FileName.Length > 0)
+                    _oneMastOutcome.SaveToFile(saveFileDialog.FileName);
+            }
         }
     }
 }
