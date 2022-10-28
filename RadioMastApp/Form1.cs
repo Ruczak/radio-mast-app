@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RadioMastApp.Models;
-using AxMapWinGIS;
 using MapWinGIS;
-using Point = MapWinGIS.Point;
-using System.Xml.XPath;
+using System.Globalization;
 
 namespace RadioMastApp
 {
@@ -69,7 +60,7 @@ namespace RadioMastApp
             Shapefile sf = new Shapefile();
             int shapeCount = 0;
 
-            bool result = sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT);
+            sf.CreateNewWithShapeID("", ShpfileType.SHP_POINT);
 
             double projX = 0, projY = 0;
 
@@ -109,7 +100,7 @@ namespace RadioMastApp
 
         private void calcButton1_Click(object sender, EventArgs e)
         {
-            _twoMastOutcome.Freq = int.Parse(freqBox.Text);
+            _twoMastOutcome.Freq = double.Parse(freqBox.Text, CultureInfo.InvariantCulture);
             _twoMastOutcome.MastHeight1 = mastBar1.Value;
             _twoMastOutcome.MastHeight2 = mastBar2.Value;
 
@@ -145,16 +136,16 @@ namespace RadioMastApp
 
         private void calcButton2_Click(object sender, EventArgs e)
         {
-            double lat = double.Parse(latBox.Text);
-            double lon = double.Parse(lonBox.Text);
-            double height = double.Parse(heightBox.Text);
+            double lat = double.Parse(latBox.Text, CultureInfo.InvariantCulture);
+            double lon = double.Parse(lonBox.Text, CultureInfo.InvariantCulture);
+            double height = double.Parse(heightBox.Text, CultureInfo.InvariantCulture);
 
             _oneMastOutcome.Lat = lat;
             _oneMastOutcome.Lon = lon;
             _oneMastOutcome.MastHeight = height;
             _oneMastOutcome.Calculate();
 
-            outcomeLabel2.Text += $"\n Line of sight: {_oneMastOutcome.LineOfSight} m";
+            outcomeLabel2.Text += $"\n Line of sight: {Math.Round(_oneMastOutcome.LineOfSight, 4)} m";
         }
 
         private void saveButton2_Click(object sender, EventArgs e)

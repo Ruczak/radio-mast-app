@@ -56,6 +56,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lonBox = new System.Windows.Forms.TextBox();
             this.heightBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mastBar2)).BeginInit();
@@ -77,6 +78,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tabPage1.Controls.Add(this.label9);
             this.tabPage1.Controls.Add(this.outcomeLabel1);
             this.tabPage1.Controls.Add(this.saveButton1);
             this.tabPage1.Controls.Add(this.calcButton1);
@@ -97,7 +99,7 @@
             // 
             // outcomeLabel1
             // 
-            this.outcomeLabel1.Location = new System.Drawing.Point(209, 18);
+            this.outcomeLabel1.Location = new System.Drawing.Point(252, 18);
             this.outcomeLabel1.Name = "outcomeLabel1";
             this.outcomeLabel1.Size = new System.Drawing.Size(195, 378);
             this.outcomeLabel1.TabIndex = 10;
@@ -333,6 +335,15 @@
             this.heightBox.Size = new System.Drawing.Size(97, 20);
             this.heightBox.TabIndex = 0;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(196, 183);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(20, 13);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Hz";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -382,6 +393,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label outcomeLabel2;
         private System.Windows.Forms.Button calcButton2;
+        private System.Windows.Forms.Label label9;
     }
 }
 

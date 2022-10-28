@@ -12,7 +12,7 @@ namespace RadioMastApp.Models
     {
         public int MastHeight1 { get; set; }
         public int MastHeight2 { get; set; }
-        public int Freq { get; set; }
+        public double Freq { get; set; }
         public double LineOfSight { get; private set; }
         public double FresnelRadius { get; private set; }
 
@@ -21,7 +21,7 @@ namespace RadioMastApp.Models
             double d1 = Math.Sqrt(2 * 4D / 3 * 6371000 * MastHeight1);
             double d2 = Math.Sqrt(2 * 4D / 3 * 6371000 * MastHeight2);
             LineOfSight = d1 + d2;
-            FresnelRadius = 17.31 * Math.Sqrt(LineOfSight / (4000000 * Freq));
+            FresnelRadius = 17.32 * Math.Sqrt((LineOfSight / 1000) / (4 * Freq / 1e9));
         }
 
         public override void SaveToFile(string path)
